@@ -12,14 +12,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Build with agent Gradle
-        run: agent/gradlew build
-      - name: goto app folder
-        run: cd app
-      - name: Build with Gradle
-        run: ./gradlew build
-      - name: return repo root
-        run: cd ..
+      - name: Gradle Build
+        run:  ./gradlew build
       - name: Run Agent
         run: 'java -javaagent:$AGENT_PATH -jar $APP_PATH'
         env:
