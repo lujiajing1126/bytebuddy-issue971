@@ -1,7 +1,9 @@
 name: Super-Linter
 
 on: [push]
-
+env:
+  AGENT_PATH: agent/build/libs/shadow-1.0-SNAPSHOT-all.jar
+  APP_PATH: app/build/libs/app-1.0-SNAPSHOT.jar
 jobs:
   build:
     runs-on: macos-latest
@@ -12,9 +14,19 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Gradle Build
+      - name: Gradle build
         run:  ./gradlew build
-      - name: Run Agent
+      - name: Test Case with annotation including double member
+        run: echo "***Test Case with annotation including the double member***"
+      - name: Run app with agent attached
+        run: 'java -javaagent:$AGENT_PATH -jar $APP_PATH'
+      - name: Comment out double mebmber in @interface Timed annotation
+        run: sed -i "" 's/double/\/\/double/' app/src/main/java/org/example/Timed.java
+      - name: Gradle Build
+        run: ./gradlew build
+      - name: Test case with annotation excluding double member
+        run:  echo "***Test Case with annotation excluding the double member***"
+      - name: Run app and agent again
         run: 'java -javaagent:$AGENT_PATH -jar $APP_PATH'
         env:
           AGENT_PATH: agent/build/libs/shadow-1.0-SNAPSHOT-all.jar
