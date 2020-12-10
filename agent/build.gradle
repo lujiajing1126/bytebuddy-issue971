@@ -10,6 +10,7 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
     maven { url 'https://maven.aliyun.com/repository/public/' }
+    maven { url 'https://jitpack.io' }
 }
 
 jar {
@@ -29,7 +30,9 @@ shadowJar {
 project.tasks.build.dependsOn(shadowJar)
 // 1.10.10 also works
 dependencies {
-    implementation "net.bytebuddy:byte-buddy:1.10.18"
-    implementation 'net.bytebuddy:byte-buddy-agent:1.10.18'
+//    implementation "net.bytebuddy:byte-buddy:1.10.18"
+//    implementation 'net.bytebuddy:byte-buddy-agent:1.10.18'
+    implementation "com.github.raphw:byte-buddy:master-SNAPSHOT"
+    implementation "com.github.raphw:byte-buddy-agent:master-SNAPSHOT"
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
